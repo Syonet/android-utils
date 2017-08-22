@@ -159,3 +159,5 @@ bintray {
         }
     }
 }
+
+//./gradlew clean build install bintrayUpload
