@@ -1,24 +1,15 @@
-package br.com.syonet.library.android.util;
+package br.com.syonet.androidutils;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.IBinder;
-import android.provider.Settings;
-import android.view.inputmethod.InputMethodManager;
-
-import br.com.syonet.library.android.R;
-
 
 /**
- * Classe utilitária para o Android
+ * Classe utilitária para dialogs
  * </p>
- * Created by Eduardo Herzer on 21/08/17.
+ * Created by Eduardo Herzer on 22/08/17.
  */
-public class AndroidUtils {
+public class DialogUtils {
     /**
      * Exibe uma janela de diálogo na tela
      *
@@ -76,40 +67,5 @@ public class AndroidUtils {
                 .setPositiveButton(R.string.yes, onClickListener)
                 .setNegativeButton(R.string.no, onClickListener)
                 .show();
-    }
-
-    /**
-     * Método responsável por esconder o teclado virtual
-     *
-     * @param activity {@link Activity}
-     */
-    public static void hideSoftKeyboard(Activity activity) {
-        if (activity != null && activity.getCurrentFocus() != null) {
-            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
-        }
-    }
-
-    /**
-     * Método responsável por esconder o teclado virtual de uma view
-     */
-    public static void hideSoftKeyboard(Context context, IBinder windowToken) {
-        if (context != null) {
-            InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(windowToken, 0);
-        }
-    }
-
-    /**
-     * Abre tela do SO de permissões do aplicativo
-     *
-     * @param activity {@link Activity}
-     */
-    public static void openAppSettings(Activity activity) {
-        Intent intent = new Intent();
-        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
-        intent.setData(uri);
-        activity.startActivity(intent);
     }
 }
