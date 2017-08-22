@@ -11,7 +11,7 @@ import android.provider.Settings;
  * Created by Eduardo Herzer on 22/08/17.
  */
 
-public class SettingsUtil {
+public class SettingsUtils {
     /**
      * Abre tela do SO de permissões do aplicativo
      *
