@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 
 /**
  * Classe utilitária para dialogs
- * </p>
+ * <p></p>
  * Created by Eduardo Herzer on 22/08/17.
  */
 public class DialogUtils {

@@ -7,7 +7,7 @@ import android.view.inputmethod.InputMethodManager;
 
 /**
  * Classe utilitária para teclado
- * </p>
+ * <p></p>
  * Created by Eduardo Herzer on 22/08/17.
  */
 

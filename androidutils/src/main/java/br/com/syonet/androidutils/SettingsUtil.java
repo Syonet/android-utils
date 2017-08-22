@@ -7,7 +7,7 @@ import android.provider.Settings;
 
 /**
  * Classe utilitária para configirações
- * </p>
+ * <p></p>
  * Created by Eduardo Herzer on 22/08/17.
  */
 
