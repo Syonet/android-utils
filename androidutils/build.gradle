@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "26.0.0"
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -24,26 +24,138 @@ dependencies {
 
 ext {
     bintrayRepo = 'maven'
-    bintrayName = 'android-utils'   // Has to be same as your library module name
+    bintrayName = 'androidutils'
 
     publishedGroupId = 'syonet.github.io'
-    libraryName = 'AndroidLib'
-    artifact = 'android-utils'     // Has to be same as your library module name
+    libraryName = 'AndroidUtils'
+    artifact = 'androidutils'
 
-    libraryDescription = 'Android Library with useful methods'
+    libraryDescription = 'Android library with useful methods'
 
     // Your github repo link
-    siteUrl = 'https://github.com/nisrulz/UploadToBintray'
-    gitUrl = 'https://github.com/nisrulz/UploadToBintray.git'
-    githubRepository= 'nisrulz/UploadToBintray'
+    siteUrl = 'https://github.com/Syonet/android-utils'
+    gitUrl = 'https://github.com/Syonet/android-utils.git'
+    githubRepository= 'Syonet/android-utils'
 
-    libraryVersion = '1.0'
+    libraryVersion = '1.0.0'
 
-    developerId = 'nisrulz'
-    developerName = 'Nishant Srivastava'
-    developerEmail = 'nisrulz@gmail.com'
+    developerId = 'eduardoherzer'
+    developerName = 'Eduardo Herzer'
+    developerEmail = 'eduardo.herzer@syonet.com'
 
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
+    licenseName = 'MIT'
+    licenseUrl = 'https://github.com/Syonet/android-utils/blob/master/LICENSE'
+    allLicenses = ["MIT"]
+}
+
+// Maven section
+// You shouldn't need to change anything. It just uses the
+// values you set above.
+
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = publishedGroupId // Maven Group ID for the artifact
+
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+                groupId publishedGroupId
+                artifactId artifact
+
+                // Add your description here
+                name libraryName
+                description libraryDescription
+                url siteUrl
+
+                // Set your license
+                licenses {
+                    license {
+                        name licenseName
+                        url licenseUrl
+                    }
+                }
+                developers {
+                    developer {
+                        id developerId
+                        name developerName
+                        email developerEmail
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+
+                }
+            }
+        }
+    }
+}
+
+// Bintray section
+// As long as you add bintray.user and bintray.apikey to the local.properties
+// file, you shouldn't have to change anything here. The reason you
+// don't just write them here is so that they won't be publicly visible
+// in GitHub or wherever your source control is.
+
+apply plugin: 'com.jfrog.bintray'
+
+version = libraryVersion
+
+if (project.hasProperty("android")) { // Android libraries
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.srcDirs
+    }
+
+    task javadoc(type: Javadoc) {
+        source = android.sourceSets.main.java.srcDirs
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    }
+} else { // Java libraries
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = bintrayRepo
+        name = bintrayName
+        desc = libraryDescription
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = allLicenses
+        publish = true
+        publicDownloadNumbers = true
+        version {
+            desc = libraryDescription
+            gpg {
+                // optional GPG encryption. Default is false.
+                sign = true
+                passphrase = properties.getProperty("bintray.gpg.password")
+            }
+        }
+    }
 }
