@@ -4,7 +4,7 @@ import java.util.List;
 
 import android.text.TextUtils;
 
-public class StringsUtils {
+public class StringUtils {
     /**
      * Verifica se um objeto é vazio.
      *
