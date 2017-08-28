@@ -7,7 +7,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 2
-        versionName "1.1.0"
+        versionName "1.1.1"
     }
     buildTypes {
         release {
@@ -37,7 +37,7 @@ ext {
     gitUrl = 'https://github.com/Syonet/android-utils.git'
     githubRepository= 'Syonet/android-utils'
 
-    libraryVersion = '1.1.0'
+    libraryVersion = '1.1.1'
 
     developerId = 'eduardoherzer'
     developerName = 'Eduardo Herzer'
